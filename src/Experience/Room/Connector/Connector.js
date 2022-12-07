@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import Experience from "../../Experience";
 import vertexShader from "./vertex.glsl";
+import noise from "/src/Experience/Utils/noise.glsl";
 import fragmentShader from "./fragment.glsl";
 
 export default class Connector {
@@ -17,39 +18,117 @@ export default class Connector {
     this.points = _points;
     this.color = _color;
 
-    if (this.debug.active) {
-      this.debugFolder = this.debug.gui.addFolder("Connector");
-      this.debugFolder.addColor(this, "color");
-      this.bezierPoints.forEach((point, index) => {
-      const bezierFolder = this.debugFolder.addFolder(`Bezier ${index}`);
-        bezierFolder.add(point, "x", -1, 1, 0.01).onChange(() => {
-          this.updateGeometry();
-        });
-        bezierFolder.add(point, "y", -1, 1, 0.01).onChange(() => {
-          this.updateGeometry();
-        });
-        bezierFolder.add(point, "z", -1, 1, 0.01).onChange(() => {
-          this.updateGeometry();
-        });
-      });
+    this.PARAMS = {
+      waveIntensity: 0.01,
+      waveSpeed: 0.001,
+      waveFrequency: 2,
+      noiseIntensity: 0.01,
+      noiseSpeed: 0.001,
+      noiseFrequency: 2,
+    };
 
-      this.points.forEach((point, index) => {
-        const pointFolder = this.debugFolder.addFolder(`Point ${index}`);
-        pointFolder.add(point, "x", -1, 1, 0.01).onChange(() => {
-          this.updateGeometry();
-        });
-        pointFolder.add(point, "y", -1, 1, 0.01).onChange(() => {
-          this.updateGeometry();
-        });
-        pointFolder.add(point, "z", -1, 1, 0.01).onChange(() => {
-          this.updateGeometry();
-        });
-      });
-    }
-
+    if (this.debug.active) this.setDebug();
     this.setGeometry();
     this.setMaterial();
     this.setMesh();
+  }
+
+  setDebug() {
+    this.debugFolder = this.debug.gui.addFolder({
+      title: "connector",
+      expanded: false,
+    });
+    this.debugFolder.addInput(this, "color", {
+      color: { type: "float" },
+      picker: "inline",
+      expanded: true,
+    });
+    this.bezierPoints.forEach((point, index) => {
+      const bezierFolder = this.debugFolder.addFolder({
+        title: `bezier point ${index}`,
+        expanded: false,
+      });
+      bezierFolder
+        .addInput(point, "x", { min: -1, max: 1, step: 0.1 })
+        .on("change", this.updateGeometry.bind(this));
+      bezierFolder
+        .addInput(point, "y", { min: -1, max: 1, step: 0.1 })
+        .on("change", this.updateGeometry.bind(this));
+      bezierFolder
+        .addInput(point, "z", { min: -1, max: 1, step: 0.1 })
+        .on("change", this.updateGeometry.bind(this));
+    });
+
+    this.points.forEach((point, index) => {
+      const pointFolder = this.debugFolder.addFolder({
+        title: `point ${index}`,
+        expanded: false,
+      });
+      pointFolder
+        .addInput(point, "x", { min: -10, max: 10, step: 1 })
+        .on("change", this.updateGeometry.bind(this));
+      pointFolder
+        .addInput(point, "y", { min: -10, max: 10, step: 1 })
+        .on("change", this.updateGeometry.bind(this));
+      pointFolder
+        .addInput(point, "z", { min: -10, max: 10, step: 1 })
+        .on("change", this.updateGeometry.bind(this));
+    });
+
+    this.debugFolder
+      .addInput(this.PARAMS, "waveIntensity", {
+        min: 0,
+        max: 0.1,
+        step: 0.001,
+      })
+      .on("change", ({ value }) => {
+        this.material.uniforms.uWaveIntensity.value = value;
+      });
+    this.debugFolder
+      .addInput(this.PARAMS, "waveSpeed", {
+        min: 0,
+        max: 0.1,
+        step: 0.001,
+      })
+      .on("change", ({ value }) => {
+        this.material.uniforms.uWaveSpeed.value = value;
+      });
+    this.debugFolder
+      .addInput(this.PARAMS, "waveFrequency", {
+        min: 0,
+        max: 10,
+        step: 0.1,
+      })
+      .on("change", ({ value }) => {
+        this.material.uniforms.uWaveFrequency.value = value;
+      });
+    this.debugFolder
+      .addInput(this.PARAMS, "noiseIntensity", {
+        min: 0,
+        max: 0.1,
+        step: 0.001,
+      })
+      .on("change", ({ value }) => {
+        this.material.uniforms.uNoiseIntensity.value = value;
+      });
+    this.debugFolder
+      .addInput(this.PARAMS, "noiseSpeed", {
+        min: 0,
+        max: 0.1,
+        step: 0.001,
+      })
+      .on("change", ({ value }) => {
+        this.material.uniforms.uNoiseSpeed.value = value;
+      });
+    this.debugFolder
+      .addInput(this.PARAMS, "noiseFrequency", {
+        min: 0,
+        max: 10,
+        step: 0.1,
+      })
+      .on("change", ({ value }) => {
+        this.material.uniforms.uNoiseFrequency.value = value;
+      });
   }
 
   setGeometry() {
@@ -60,7 +139,7 @@ export default class Connector {
       this.points[1]
     );
 
-    this.geometry = new THREE.TubeGeometry(curve, 128, 0.01, 8, false);
+    this.geometry = new THREE.TubeGeometry(curve, 16, 0.01, 8, false);
   }
 
   updateGeometry() {
@@ -74,8 +153,14 @@ export default class Connector {
       uniforms: {
         color: { value: this.color },
         uTime: { value: 0.0 },
+        uWaveIntensity: { value: this.PARAMS.waveIntensity },
+        uWaveSpeed: { value: this.PARAMS.waveSpeed },
+        uWaveFrequency: { value: this.PARAMS.waveFrequency },
+        uNoiseIntensity: { value: this.PARAMS.noiseIntensity },
+        uNoiseSpeed: { value: this.PARAMS.noiseSpeed },
+        uNoiseFrequency: { value: this.PARAMS.noiseFrequency },
       },
-      vertexShader,
+      vertexShader: noise + vertexShader,
       fragmentShader,
     });
   }

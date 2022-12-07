@@ -12,7 +12,7 @@ export default class Room {
 
     this.connector = new Connector(
       [new THREE.Vector3(-1, 1, 0), new THREE.Vector3(1, 0, 0)],
-      new THREE.Color(0x00ff00)
+      new THREE.Color(0xffffff)
     );
 
     // Wait for resources
