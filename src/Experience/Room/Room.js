@@ -2,6 +2,7 @@ import Experience from "../Experience.js";
 import Environment from "./Environment.js";
 import Connector from "./Connector/Connector.js";
 import * as THREE from "three";
+import RoomDes from "./RoomDes.js";
 // import files for 3D objects
 
 export default class Room {
@@ -19,6 +20,8 @@ export default class Room {
     this.resources.on("ready", () => {
       // Setup
       // instantiate 3D objects before the environment
+
+      this.roomDes = new RoomDes();
       this.environment = new Environment();
     });
   }
