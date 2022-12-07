@@ -814,7 +814,7 @@
     ],
     "materials" : [
         {
-            "doubleSided" : true,
+            "doubleSided" : false,
             "name" : "ROOMDES",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
@@ -828,13 +828,13 @@
             }
         },
         {
-            "doubleSided" : true,
+            "doubleSided" : false,
             "name" : "Neutral",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
-                    0.4614761471748352,
-                    0.44715049862861633,
-                    0.4623544216156006,
+                    0.0443761944770813,
+                    0.04316438362002373,
+                    0.04445395991206169,
                     1
                 ],
                 "metallicFactor" : 0,
@@ -842,7 +842,7 @@
             }
         },
         {
-            "doubleSided" : true,
+            "doubleSided" : false,
             "name" : "desk",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
@@ -856,7 +856,7 @@
             }
         },
         {
-            "doubleSided" : true,
+            "doubleSided" : false,
             "name" : "chair",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
@@ -870,7 +870,7 @@
             }
         },
         {
-            "doubleSided" : true,
+            "doubleSided" : false,
             "name" : "floor_green",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
@@ -884,13 +884,13 @@
             }
         },
         {
-            "doubleSided" : true,
+            "doubleSided" : false,
             "name" : "Neutral.001",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
-                    0.4614761471748352,
-                    0.44715049862861633,
-                    0.4623544216156006,
+                    0.02360999397933483,
+                    0.02301907353103161,
+                    0.02365015260875225,
                     1
                 ],
                 "metallicFactor" : 0,
@@ -898,7 +898,7 @@
             }
         },
         {
-            "doubleSided" : true,
+            "doubleSided" : false,
             "name" : "computer",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [

@@ -3,11 +3,11 @@ import Experience from "../Experience.js";
 
 export default class RoomDes {
   constructor() {
-    console.log("RoomDes loaded");
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
     this.debug = this.experience.debug;
+    console.log(`RoomDes loaded in ${this.experience.time.elapsed}ms`);
 
     this.resource = this.resources.items.roomDes;
 
@@ -17,7 +17,6 @@ export default class RoomDes {
 
   setModel() {
     this.model = this.resource.scene;
-    this.model.material;
     this.scene.add(this.model);
   }
 

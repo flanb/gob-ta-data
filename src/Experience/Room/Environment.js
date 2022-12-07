@@ -8,21 +8,22 @@ export default class Environment {
     this.resources = this.experience.resources;
     this.debug = this.experience.debug;
 
-    // Debug
-    if (this.debug.active) {
-      this.debugFolder = this.debug.gui.addFolder("environment");
-    }
+    // this.SetSunlight();
+    this.setAmbientLight();
+    // this.environmentMap();
+  }
 
-    this.SetSunlight();
-    // this.environmentMap()
+  setAmbientLight() {
+    this.ambientLight = new THREE.AmbientLight("#ffffff", 5);
+    this.scene.add(this.ambientLight);
   }
 
   SetSunlight() {
     this.sunLight = new THREE.DirectionalLight("#ffffff", 4);
-    this.sunLight.castShadow = true;
-    this.sunLight.shadow.mapSize.set(1024, 1024);
-    this.sunLight.shadow.camera.far = 100;
-    this.sunLight.shadow.normalBias = 0.05;
+    // this.sunLight.castShadow = true;
+    // this.sunLight.shadow.mapSize.set(1024, 1024);
+    // this.sunLight.shadow.camera.far = 100;
+    // this.sunLight.shadow.normalBias = 0.05;
     this.sunLight.position.set(3, 3, -2.25);
     this.scene.add(this.sunLight);
 
@@ -72,7 +73,7 @@ export default class Environment {
 
     if (this.debug.active) {
       this.debugFolder
-        .add(this.environmentMap, "intensity")
+        .addInput(this.environmentMap, "intensity")
         .name("envMapIntensity")
         .min(0)
         .max(4)
