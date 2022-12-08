@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import Experience from "../Experience.js";
 import social_network_colors from "../../data/social_network_colors.json";
+import { Text } from "troika-three-text";
 export default class Histogram {
   constructor(_position, _data) {
     this.experience = new Experience();
@@ -41,6 +42,15 @@ export default class Histogram {
         color,
         network[1] / 1000
       );
+      this.setText(
+        {
+          x: this.position.x - 1,
+          y: 21 + network[1] / 1000,
+          z: this.position.z - index,
+        },
+        color,
+        network[0]
+      );
     });
 
     this.group.position.set(this.position.x, this.position.y, this.position.z);
@@ -65,5 +75,19 @@ export default class Histogram {
       _position.z + this.allNetworks.length / 2
     );
     this.group.add(this.mesh);
+  }
+  setText(_position, _color, _text) {
+    this.text = new Text();
+    this.text.text = _text;
+    this.text.fontSize = 0.75;
+    this.text.color = new THREE.Color(_color);
+    this.text.rotation.y = Math.PI / 2;
+    this.text.rotation.x = Math.PI / 3;
+    this.text.position.set(
+      _position.x,
+      _position.y,
+      _position.z + this.allNetworks.length / 2 + 0.75/2
+    );
+    this.scene.add(this.text);
   }
 }

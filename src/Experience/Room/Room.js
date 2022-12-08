@@ -24,7 +24,7 @@ export default class Room {
 
     this.histogram = new Histogram(
       {
-        x: 0,
+        x: -1,
         y: 10,
         z: 0,
       },
