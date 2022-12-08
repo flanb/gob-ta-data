@@ -94,7 +94,7 @@ export default class Exprerience
 
         if(this.debug.active)
         {
-            this.debug.gui.destroy()
+            // this.debug.gui.destroy()
         }
     }
 
