@@ -113,12 +113,12 @@
             "count" : 44,
             "max" : [
                 1,
-                1,
+                0.964928388595581,
                 1
             ],
             "min" : [
                 -1,
-                -1,
+                -1.035071611404419,
                 -1
             ],
             "type" : "VEC3"
@@ -138,12 +138,12 @@
             "count" : 4,
             "max" : [
                 0.8205528855323792,
-                0.2761632204055786,
+                0.24109163880348206,
                 0.9381490349769592
             ],
             "min" : [
                 -0.8205528855323792,
-                0.2761632204055786,
+                0.24109163880348206,
                 -0.9381490349769592
             ],
             "type" : "VEC3"
@@ -174,7 +174,7 @@
     "buffers" : [
         {
             "byteLength" : 404,
-            "uri" : "data:application/octet-stream;base64,RFJBQ08CAgEBAAAALBoBGgEBEwcBCt/3veu6fN/3fR//AqpA/wIjQQL/AAAAAAABAAkDAAACAQEJAwABAwEBAQAPA0kXjQ4b6QJdBL0IXQTRBRBQHLerUhFTp51BEm2cXWyDfRsA9qNvRbkAQL4FAAAAAABA+/OtKBcA0LcAAABA3wIA9wMARLntBwAA4H7sLQDYD98CQP3sLQDgDwAA2J+9BQAAIAAA1A8AIMp1PwAAgPbDbwWgfiqABgLUCJQhwEgEAAAAAP8/AAAAAIC/AACAvwAAgL8AAABADgADAQED/wdJN//////////3XQTpAv/////////zdQEL+e2CZhrRkVEWk4P/AwAA/wEAAApEUkFDTwICAQEAAAAEAgECAAABH/8BEf8BEQL/AAAAAAABAAkDAAACAQEJAwABAwEBAQAOAwEQKwEwAwAogg0QAAAABwgAAkADBAAAAAAAAAD/PwAAwQ9Sv0RljT6JKnC/iSrwPw4AAwEACgMBMBsBEAMAHIL/AQD/AwAA/wEAAAoAAAA="
+            "uri" : "data:application/octet-stream;base64,RFJBQ08CAgEBAAAALBoBGgEBEwcBCt/3veu6fN/3fR//AqpA/wIjQQL/AAAAAAABAAkDAAACAQEJAwABAwEBAQAPA0kXjQ4b6QJdBL0IXQTRBRBQHLerUhFTp51BEm2cXWyDfRsA9qNvRbkAQL4FAAAAAABA+/OtKBcA0LcAAABA3wIA9wMARLntBwAA4H7sLQDYD98CQP3sLQDgDwAA2J+9BQAAIAAA1A8AIMp1PwAAgPbDbwWgfiqABgLUCJQhwEgEAAAAAP8/AAAAAIC/On2EvwAAgL8AAABADgADAQED/wdJN//////////3XQTpAv/////////zdQEL+e2CZhrRkVEWk4P/AwAA/wEAAApEUkFDTwICAQEAAAAEAgECAAABH/8BEf8BEQL/AAAAAAABAAkDAAACAQEJAwABAwEBAQAOAwEQKwEwAwAogg0QAAAABwgAAkADBAAAAAAAAAD/PwAAwQ9Sv7rgdj6JKnC/iSrwPw4AAwEACgMBMBsBEAMAHIL/AQD/AwAA/wEAAAoAAAA="
         }
     ]
 }

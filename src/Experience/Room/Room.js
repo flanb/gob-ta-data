@@ -4,6 +4,7 @@ import Connector from "./Connector/Connector.js";
 import * as THREE from "three";
 import RoomDes from "./RoomDes.js";
 import Android from "./Android.js";
+import screen_time from "../../data/screen_time.json";
 // import files for 3D objects
 
 export default class Room {
@@ -18,10 +19,10 @@ export default class Room {
       randomRangeX: 5,
       randomRangeZ: 25,
     };
-
     if (this.debug.active) this.setDebug();
 
-    this.scene.add(new THREE.AxesHelper(5));
+    this.designer = screen_time.filter((d) => d.role === "Designer");
+    this.developer = screen_time.filter((d) => d.role === "Developer");
 
     // Wait for resources
     this.resources.on("ready", () => {
@@ -52,7 +53,7 @@ export default class Room {
   }
 
   setPhones() {
-    for (let i = 0; i < 17; i++) {
+    this.designer.forEach((des) => {
       this.android = new Android({
         x:
           Math.random() * this.PARAMS.randomRangeX -
@@ -62,9 +63,9 @@ export default class Room {
         z:
           Math.random() * this.PARAMS.randomRangeZ -
           this.PARAMS.randomRangeZ / 2,
-      });
+      }, des);
       this.devicesObjects.push(this.android);
-    }
+    });
   }
 
   update() {

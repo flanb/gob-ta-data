@@ -3,14 +3,17 @@ import Experience from "../Experience.js";
 import Connector from "./Connector/Connector.js";
 
 export default class Android {
-  constructor(_coords) {
+  constructor(_coords, _data) {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
     this.resource = this.resources.items.android;
 
     this.coords = _coords;
+		this.data = _data;
     this.color = new THREE.Color(Math.random(), Math.random(), Math.random());
+
+		this.weight = this.data.globalScreenTime / 200;
 
     this.setModel();
     this.setConnector();
@@ -19,6 +22,7 @@ export default class Android {
   setModel() {
     this.model = this.resource.scene.clone();
     this.model.scale.set(0.2, 0.2, 0.2);
+		this.model.rotation.y = Math.random() * Math.PI * 2;
     this.model.name = "android";
     this.model.position.set(this.coords.x, this.coords.y, this.coords.z);
 
@@ -29,9 +33,10 @@ export default class Android {
     this.connector = new Connector(
       [
         new THREE.Vector3(this.coords.x, this.coords.y, this.coords.z),
-        new THREE.Vector3(0, 10, 0),
+        new THREE.Vector3(0, 20, 0),
       ],
-      this.color
+      this.color,
+	    this.weight
     );
   }
 

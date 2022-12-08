@@ -5,7 +5,7 @@ import noise from "/src/Experience/Utils/noise.glsl";
 import fragmentShader from "./fragment.glsl";
 
 export default class Connector {
-  constructor(_points, _color) {
+  constructor(_points, _color, _weight) {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.debug = this.experience.debug;
@@ -17,12 +17,13 @@ export default class Connector {
 
     this.points = _points;
     this.color = _color;
+    this.weight = _weight;
 
     this.PARAMS = {
       waveIntensity: 0.01,
       waveSpeed: 0.001,
       waveFrequency: 2,
-      noiseIntensity: 0.01,
+      noiseIntensity: 0.05,
       noiseSpeed: 0.001,
       noiseFrequency: 2,
       uRandom: Math.random(),
@@ -32,6 +33,7 @@ export default class Connector {
     this.setGeometry();
     this.setMaterial();
     this.setMesh();
+    this.setLight();
   }
 
   setDebug() {
@@ -132,6 +134,18 @@ export default class Connector {
       });
   }
 
+  setLight() {
+    // put a light along the connector
+    this.light = new THREE.PointLight(this.color, this.weight * 0.3);
+    this.light.position.copy(
+      new THREE.Vector3(
+        this.points[0].x - this.points[1].x,
+        5,
+        this.points[0].z - this.points[1].z
+      )
+    );
+    this.scene.add(this.light);
+  }
   setGeometry() {
     const curve = new THREE.CubicBezierCurve3(
       this.points[0],
@@ -140,7 +154,13 @@ export default class Connector {
       this.points[1]
     );
 
-    this.geometry = new THREE.TubeGeometry(curve, 16, 0.01, 8, false);
+    this.geometry = new THREE.TubeGeometry(
+      curve,
+      32,
+      0.01 * this.weight,
+      8,
+      false
+    );
   }
 
   updateGeometry() {
