@@ -1,11 +1,9 @@
 import Experience from "../Experience.js";
 import Environment from "./Environment.js";
-import Connector from "./Connector/Connector.js";
-import * as THREE from "three";
 import RoomDes from "./RoomDes.js";
 import Android from "./Android.js";
 import screen_time from "../../data/screen_time.json";
-// import files for 3D objects
+import Histogram from "./Histogram.js";
 
 export default class Room {
   constructor() {
@@ -17,12 +15,21 @@ export default class Room {
     this.devicesObjects = [];
     this.PARAMS = {
       randomRangeX: 5,
-      randomRangeZ: 25,
+      randomRangeZ: 32,
     };
     if (this.debug.active) this.setDebug();
 
     this.designer = screen_time.filter((d) => d.role === "Designer");
     this.developer = screen_time.filter((d) => d.role === "Developer");
+
+    this.histogram = new Histogram(
+      {
+        x: 0,
+        y: 10,
+        z: 0,
+      },
+      this.designer
+    );
 
     // Wait for resources
     this.resources.on("ready", () => {
@@ -54,16 +61,20 @@ export default class Room {
 
   setPhones() {
     this.designer.forEach((des) => {
-      this.android = new Android({
-        x:
-          Math.random() * this.PARAMS.randomRangeX -
-          this.PARAMS.randomRangeX / 2 +
-          -3,
-        y: 3.25,
-        z:
-          Math.random() * this.PARAMS.randomRangeZ -
-          this.PARAMS.randomRangeZ / 2,
-      }, des);
+      this.android = new Android(
+        {
+          x:
+            Math.random() * this.PARAMS.randomRangeX -
+            this.PARAMS.randomRangeX / 2 +
+            -3,
+          y: 3.25,
+          z:
+            Math.random() * this.PARAMS.randomRangeZ -
+            this.PARAMS.randomRangeZ / 2 +
+            3,
+        },
+        des
+      );
       this.devicesObjects.push(this.android);
     });
   }

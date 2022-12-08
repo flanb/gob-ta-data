@@ -11,8 +11,8 @@ export default class Connector {
     this.debug = this.experience.debug;
 
     this.bezierPoints = [
-      _points[0].clone().add(new THREE.Vector3(0, 2, 0)),
-      _points[1].clone().add(new THREE.Vector3(0, -2, 0)),
+      _points[0].clone().add(new THREE.Vector3(0, 10, 0)),
+      _points[1].clone().add(new THREE.Vector3(0, -10, 0)),
     ];
 
     this.points = _points;
@@ -135,7 +135,6 @@ export default class Connector {
   }
 
   setLight() {
-    // put a light along the connector
     this.light = new THREE.PointLight(this.color, this.weight * 0.3);
     this.light.position.copy(
       new THREE.Vector3(
@@ -154,6 +153,7 @@ export default class Connector {
       this.points[1]
     );
 
+
     this.geometry = new THREE.TubeGeometry(
       curve,
       32,
@@ -165,6 +165,7 @@ export default class Connector {
 
   updateGeometry() {
     this.geometry.dispose();
+		this.light.dispose()
     this.setGeometry();
     this.mesh.geometry = this.geometry;
   }
@@ -199,6 +200,7 @@ export default class Connector {
   destroy() {
     this.geometry.dispose();
     this.material.dispose();
+		this.light.dispose()
     this.scene.remove(this.mesh);
   }
 }
