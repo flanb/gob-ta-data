@@ -7,16 +7,21 @@ export default [
   {
     name: "roomDes",
     type: "gltfModel",
-    path: "models/Rooms/glTF/Rooms/roomDes.gltf",
+    path: "models/Rooms/glTF/rooms/roomDes.gltf",
   },
   {
     name: "roomDev",
     type: "gltfModel",
-    path: "models/Rooms/glTF/Rooms/roomDev.gltf",
+    path: "models/Rooms/glTF/rooms/roomDev.gltf",
   },
   {
     name: "doors",
     type: "gltfModel",
     path: "models/Rooms/glTF/doors.gltf",
+  },
+  {
+    name: "android",
+    type: "gltfModel",
+    path: "models/Rooms/glTF/phone_android.gltf",
   },
 ];

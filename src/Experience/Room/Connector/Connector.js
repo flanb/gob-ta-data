@@ -11,8 +11,8 @@ export default class Connector {
     this.debug = this.experience.debug;
 
     this.bezierPoints = [
-      new THREE.Vector3(0, 0, 0),
-      new THREE.Vector3(0, 0, 0),
+      _points[0].clone().add(new THREE.Vector3(0, 2, 0)),
+      _points[1].clone().add(new THREE.Vector3(0, -2, 0)),
     ];
 
     this.points = _points;
@@ -25,9 +25,10 @@ export default class Connector {
       noiseIntensity: 0.01,
       noiseSpeed: 0.001,
       noiseFrequency: 2,
+      uRandom: Math.random(),
     };
 
-    if (this.debug.active) this.setDebug();
+    // if (this.debug.active) this.setDebug();
     this.setGeometry();
     this.setMaterial();
     this.setMesh();
@@ -49,13 +50,13 @@ export default class Connector {
         expanded: false,
       });
       bezierFolder
-        .addInput(point, "x", { min: -1, max: 1, step: 0.1 })
+        .addInput(point, "x", { min: -10, max: 10, step: 0.1 })
         .on("change", this.updateGeometry.bind(this));
       bezierFolder
-        .addInput(point, "y", { min: -1, max: 1, step: 0.1 })
+        .addInput(point, "y", { min: -10, max: 10, step: 0.1 })
         .on("change", this.updateGeometry.bind(this));
       bezierFolder
-        .addInput(point, "z", { min: -1, max: 1, step: 0.1 })
+        .addInput(point, "z", { min: -10, max: 10, step: 0.1 })
         .on("change", this.updateGeometry.bind(this));
     });
 
@@ -159,6 +160,7 @@ export default class Connector {
         uNoiseIntensity: { value: this.PARAMS.noiseIntensity },
         uNoiseSpeed: { value: this.PARAMS.noiseSpeed },
         uNoiseFrequency: { value: this.PARAMS.noiseFrequency },
+        uRandom: { value: this.PARAMS.uRandom },
       },
       vertexShader: noise + vertexShader,
       fragmentShader,
@@ -172,5 +174,11 @@ export default class Connector {
 
   update() {
     this.material.uniforms.uTime.value = this.experience.time.elapsed;
+  }
+
+  destroy() {
+    this.geometry.dispose();
+    this.material.dispose();
+    this.scene.remove(this.mesh);
   }
 }

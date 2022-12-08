@@ -5,9 +5,10 @@ varying vec2 vUv;
 uniform float uTime;
 uniform float uWaveSpeed;
 uniform float uWaveFrequency;
+uniform float uRandom;
 
 void main() {
-    float directionColor = abs(cos(uTime * uWaveSpeed + vUv.x * uWaveFrequency));
+    float directionColor = abs(cos((uTime + uRandom * 10000.) * uWaveSpeed - vUv.x * uWaveFrequency));
 
     gl_FragColor = vec4(
     color * directionColor,

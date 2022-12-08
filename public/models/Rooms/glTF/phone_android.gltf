@@ -28,15 +28,15 @@
                 1
             ],
             "translation" : [
-                -1.0579257011413574,
-                -0.4654045104980469,
-                -43.86879348754883
+                0,
+                0,
+                0
             ]
         }
     ],
     "materials" : [
         {
-            "doubleSided" : true,
+            "doubleSided" : false,
             "name" : "body_phone",
             "pbrMetallicRoughness" : {
                 "baseColorFactor" : [
