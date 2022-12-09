@@ -22,7 +22,7 @@ export default class Room {
       randomRangeX: 5,
       randomRangeZ: 32,
     };
-    if (this.debug.active) this.setDebug();
+    // if (this.debug.active) this.setDebug();
 
     this.designer = screen_time.filter((d) => d.role === "Designer");
     this.developer = screen_time.filter((d) => d.role === "Developer");
@@ -73,26 +73,26 @@ export default class Room {
       this.setPhones();
     });
 
-    if(this.camera) {
+    if (this.camera) {
       this.initListners();
     }
   }
 
   initListners() {
     window.addEventListener("mousedown", () => {
-      if(this.camera.position.z < 0){
+      if (this.camera.position.z < 0) {
         this.mouseDownFromRight = true;
         this.mouseDownFromLeft = false;
       } else {
         this.mouseDownFromRight = false;
         this.mouseDownFromLeft = true;
       }
-    })
+    });
 
     window.addEventListener("mouseup", () => {
       this.mouseDownFromRight = false;
       this.mouseDownFromLeft = false;
-    })
+    });
   }
 
   setPhones() {
@@ -136,22 +136,23 @@ export default class Room {
   update() {
     // Can updtate 3D objects here
     // check if the this.element is visible
-    if(this.doors) {
-      this.doors.update(this.mouseDownFromLeft, this.mouseDownFromRight);
-    this.devicesObjects.forEach((device) => {
-      device.update();
-    });
     if (this.doors) {
-      this.doors.update();
-
-      this.doors.on("doorsOpen", () => {
-        // if(this.cameraMoved === false){
-        //   this.camera.travelUpdateLeft();
-        //   this.cameraMoved = true;
-        // }
-        this.camera.travelUpdateLeft();
-        // this.camera.travelUpdateRight();
+      this.doors.update(this.mouseDownFromLeft, this.mouseDownFromRight);
+      this.devicesObjects.forEach((device) => {
+        device.update();
       });
+      if (this.doors) {
+        this.doors.update();
+
+        this.doors.on("doorsOpen", () => {
+          // if(this.cameraMoved === false){
+          //   this.camera.travelUpdateLeft();
+          //   this.cameraMoved = true;
+          // }
+          this.camera.travelUpdateLeft();
+          // this.camera.travelUpdateRight();
+        });
+      }
     }
   }
 }

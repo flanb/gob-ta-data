@@ -49,7 +49,8 @@ export default class Histogram {
           z: this.position.z - index + (this.position.z < 12 ? 0 : 28),
         },
         color,
-        network[0]
+        network[0],
+        network[1] / 1000
       );
     });
 
@@ -76,13 +77,16 @@ export default class Histogram {
     );
     this.group.add(this.mesh);
   }
-  setText(_position, _color, _text) {
+  setText(_position, _color, _text, _weight) {
     this.text = new Text();
-    this.text.text = _text;
+    this.text.text = _text.charAt(0).toUpperCase() + _text.slice(1);
     this.text.fontSize = 0.75;
+    this.text.font = "/quicksand.woff";
+    this.text.weight = "bold";
     this.text.color = new THREE.Color(_color);
     this.text.rotation.y = Math.PI / 2;
     this.text.rotation.x = Math.PI / 3;
+
     this.text.position.set(
       _position.x,
       _position.y,
