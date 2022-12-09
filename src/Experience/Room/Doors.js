@@ -7,22 +7,24 @@ export default class Doors extends EventEmitter {
   constructor() {
     super();
 
-    this.experience = new Experience();
-    this.scene = this.experience.scene;
-    this.resources = this.experience.resources;
-    this.debug = this.experience.debug;
-    this.camera = this.experience.camera.instance;
+    this.experience = new Experience()
+    this.scene = this.experience.scene
+    this.resources = this.experience.resources
+    this.debug = this.experience.debug
+    this.camera = this.experience.camera.instance
+    this.cameraTravel = this.experience.camera
+    
+    console.log(`Doors loaded in ${this.experience.time.elapsed}ms`)
+    this.currentIntersect = null
 
-    console.log(`Doors loaded in ${this.experience.time.elapsed}ms`);
-    this.currentIntersect = null;
+    this.resource = this.resources.items.doors
 
-    this.isClicked = false;
+    this.setModel()
+    this.setRaycaster()
+    this.setPointLight()
 
-    this.resource = this.resources.items.doors;
-
-    this.setModel();
-    this.setRaycaster();
-    // this.setPointLight();
+    this.isClickedLeft = false
+    this.isClickedRight = false
   }
 
   setModel() {
@@ -69,11 +71,13 @@ export default class Doors extends EventEmitter {
     this.scene.add(this.pointLightHelper);
   }
 
-  update() {
+  update(_mouseDownLeft, _mouseDownRight) {
+    
     this.raycaster.setFromCamera(this.mouse, this.camera);
     this.intersect = this.raycaster.intersectObject(this.mesh);
 
     if (this.intersect.length) {
+
       if (this.currentIntersect) {
         if (this.currentIntersect.object.name === "door") {
           gsap.to(this.modelLeft.position, {
@@ -91,9 +95,16 @@ export default class Doors extends EventEmitter {
             ease: "power2.out",
           });
 
-          window.addEventListener("click", () => {
-            this.isClicked = true;
-          });
+          if(_mouseDownLeft) {
+            console.log("left");
+            this.isClickedLeft = true
+            this.isClickedRight = false
+          }
+          if(_mouseDownRight) {
+            console.log("right");
+            this.isClickedRight = true
+            this.isClickedLeft = false
+          }
         }
       }
       this.currentIntersect = this.intersect[0];
@@ -116,8 +127,11 @@ export default class Doors extends EventEmitter {
       this.currentIntersect = null;
     }
 
-    if (this.isClicked) {
-      this.trigger("doorsOpen");
+
+    if (this.isClickedRight) {
+      this.cameraTravel.travelUpdateLeft()
+    } else if (this.isClickedLeft) {
+      this.cameraTravel.travelUpdateRight()
     }
   }
 }

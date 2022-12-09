@@ -12,9 +12,10 @@ export default class Room {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
-    this.camera = this.experience.camera;
+    this.camera = this.experience.camera.instance;
 
-    this.debug = this.experience.debug;
+    this.mouseDownFromLeft = false;
+    this.mouseDownFromRight = false;
 
     this.devicesObjects = [];
     this.PARAMS = {
@@ -71,6 +72,27 @@ export default class Room {
       });
       this.setPhones();
     });
+
+    if(this.camera) {
+      this.initListners();
+    }
+  }
+
+  initListners() {
+    window.addEventListener("mousedown", () => {
+      if(this.camera.position.z < 0){
+        this.mouseDownFromRight = true;
+        this.mouseDownFromLeft = false;
+      } else {
+        this.mouseDownFromRight = false;
+        this.mouseDownFromLeft = true;
+      }
+    })
+
+    window.addEventListener("mouseup", () => {
+      this.mouseDownFromRight = false;
+      this.mouseDownFromLeft = false;
+    })
   }
 
   setPhones() {
@@ -112,6 +134,10 @@ export default class Room {
   }
 
   update() {
+    // Can updtate 3D objects here
+    // check if the this.element is visible
+    if(this.doors) {
+      this.doors.update(this.mouseDownFromLeft, this.mouseDownFromRight);
     this.devicesObjects.forEach((device) => {
       device.update();
     });

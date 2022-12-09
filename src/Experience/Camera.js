@@ -15,9 +15,6 @@ export default class Camera {
     this.travalPath();
     this.setOrbitControls();
 
-    this.progressPosition = 0
-    this.progressLookAt = 0
-    this.easingValue = 0.2
     this.startAnimation = false
 
     if(this.debug.active) {
@@ -27,8 +24,7 @@ export default class Camera {
       })
     }
 
-
-
+    this.canTravelLeft = true
   }
 
   setInstance() {
@@ -44,7 +40,6 @@ export default class Camera {
 
   travalPath() {
     if (this.debug.active) {
-
       this.mesh = new THREE.Mesh(new THREE.BoxGeometry(.5, .5, .5), new THREE.MeshBasicMaterial({ color: 0xff0000 }))
       this.mesh.position.set(0, 1, -2)
 
@@ -55,17 +50,17 @@ export default class Camera {
   travelUpdateLeft() {
     this.instance.lookAt(this.mesh.position)
     gsap.to(this.instance.position, {
-      x: 40, y: 40, z: 40, duration: 4 * 20, ease: "power2.inout",
+      x: 40, y: 40, z: 40, duration: 4, ease: "power2.inout",
     })
-    gsap.to(this.mesh.position, {x: -0.5, y: 1, z: 12, duration: 4 * 20, ease: "power2.inout"})
+    gsap.to(this.mesh.position, {x: -0.5, y: 1, z: 12, duration: 4, ease: "power2.inout"})
   }
 
   travelUpdateRight() {
     this.instance.lookAt(this.mesh.position)
     gsap.to(this.instance.position, {
-      x: 40, y: 40, z: -40, duration: 4 * 20, ease: "power2.inout",
+      x: 40, y: 40, z: -40, duration: 4, ease: "power2.inout",
     })
-    gsap.to(this.mesh.position, {x: 0, y: 1, z: -2, duration: 4 * 20, ease: "power2.inout"})
+    gsap.to(this.mesh.position, {x: 0, y: 1, z: -2, duration: 4, ease: "power2.inout"})
   }
 
   setOrbitControls() {
@@ -82,7 +77,7 @@ export default class Camera {
     this.controls.update();
     
     if (this.startAnimation) {
-      this.travelUpdate()
+      this.travelUpdateLeft()
     }
   }
 }
