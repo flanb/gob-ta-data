@@ -109,7 +109,8 @@ export default class Room {
             this.PARAMS.randomRangeZ / 2 +
             3,
         },
-        des
+        des,
+        this.histogram.allNetworksTimeSorted
       );
       this.devicesObjects.push(this.android);
     });
@@ -127,7 +128,8 @@ export default class Room {
             this.PARAMS.randomRangeZ / 2 +
             58,
         },
-        dev
+        dev,
+        this.histogram1.allNetworksTimeSorted
       );
       this.devicesObjects.push(this.android);
     });

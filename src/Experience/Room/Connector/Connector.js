@@ -199,7 +199,7 @@ export default class Connector {
   destroy() {
     this.geometry.dispose();
     this.material.dispose();
-    this.light.dispose();
+    // this.light.destroy();
     this.scene.remove(this.mesh);
   }
 }

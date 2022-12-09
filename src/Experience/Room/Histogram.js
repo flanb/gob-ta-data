@@ -2,6 +2,7 @@ import * as THREE from "three";
 import Experience from "../Experience.js";
 import social_network_colors from "../../data/social_network_colors.json";
 import { Text } from "troika-three-text";
+
 export default class Histogram {
   constructor(_position, _data) {
     this.experience = new Experience();
@@ -11,8 +12,6 @@ export default class Histogram {
     this.data = _data;
 
     this.group = new THREE.Group();
-
-    console.log(this.data);
 
     this.allNetworks = Object.keys(social_network_colors);
 
@@ -27,11 +26,11 @@ export default class Histogram {
       }, 0);
     });
 
-    const allNetworksTimeSorted = Object.entries(allNetworksTime).sort(
+    this.allNetworksTimeSorted = Object.entries(allNetworksTime).sort(
       (a, b) => b[1] - a[1]
     );
 
-    allNetworksTimeSorted.forEach((network, index) => {
+    this.allNetworksTimeSorted.forEach((network, index) => {
       const color = new THREE.Color(social_network_colors[network[0]]);
       this.setBar(
         {
@@ -85,7 +84,7 @@ export default class Histogram {
     this.text.weight = "bold";
     this.text.color = new THREE.Color(_color);
     this.text.rotation.y = Math.PI / 2;
-    this.text.rotation.x = Math.PI / 3;
+    this.text.rotation.x = Math.PI / 4;
 
     this.text.position.set(
       _position.x,

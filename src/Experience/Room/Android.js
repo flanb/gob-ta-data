@@ -4,7 +4,7 @@ import Connector from "./Connector/Connector.js";
 import social_network_colors from "../../data/social_network_colors.json";
 
 export default class Android {
-  constructor(_coords, _data) {
+  constructor(_coords, _data, _sortedTimeData) {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
@@ -12,6 +12,7 @@ export default class Android {
 
     this.coords = _coords;
     this.data = _data;
+    this.sortedTimeData = _sortedTimeData;
 
     this.mostUsed = Object.keys(this.data).sort((a, b) => {
       return this.data[b] - this.data[a];
@@ -23,6 +24,10 @@ export default class Android {
 
     this.setModel();
     this.setConnector();
+
+    if (this.mostUsed === "globalScreenTime") {
+      this.destroy();
+    }
   }
 
   setModel() {
@@ -39,7 +44,13 @@ export default class Android {
     this.connector = new Connector(
       [
         new THREE.Vector3(this.coords.x, this.coords.y, this.coords.z),
-        new THREE.Vector3(-2, 20, this.coords.z > 20 ? 60 : 0),
+        new THREE.Vector3(
+          -2,
+          20,
+          (this.coords.z > 20 ? 56 : 0) -
+            this.sortedTimeData.findIndex((d) => d[0] === this.mostUsed) +
+            11.5
+        ),
       ],
       this.color,
       this.weight

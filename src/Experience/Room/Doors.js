@@ -7,24 +7,24 @@ export default class Doors extends EventEmitter {
   constructor() {
     super();
 
-    this.experience = new Experience()
-    this.scene = this.experience.scene
-    this.resources = this.experience.resources
-    this.debug = this.experience.debug
-    this.camera = this.experience.camera.instance
-    this.cameraTravel = this.experience.camera
-    
-    console.log(`Doors loaded in ${this.experience.time.elapsed}ms`)
-    this.currentIntersect = null
+    this.experience = new Experience();
+    this.scene = this.experience.scene;
+    this.resources = this.experience.resources;
+    this.debug = this.experience.debug;
+    this.camera = this.experience.camera.instance;
+    this.cameraTravel = this.experience.camera;
 
-    this.resource = this.resources.items.doors
+    console.log(`Doors loaded in ${this.experience.time.elapsed}ms`);
+    this.currentIntersect = null;
 
-    this.setModel()
-    this.setRaycaster()
-    this.setPointLight()
+    this.resource = this.resources.items.doors;
 
-    this.isClickedLeft = false
-    this.isClickedRight = false
+    this.setModel();
+    this.setRaycaster();
+    this.setPointLight();
+
+    this.isClickedLeft = false;
+    this.isClickedRight = false;
   }
 
   setModel() {
@@ -36,7 +36,7 @@ export default class Doors extends EventEmitter {
       opacity: 0,
     });
     this.mesh = new THREE.Mesh(this.plane, this.material);
-    this.mesh.position.set(-1, 7, 30);
+    this.mesh.position.set(-1, 7, 28);
     this.mesh.rotation.z = -Math.PI / 2;
     this.mesh.scale.set(-4, 4, 4);
 
@@ -72,12 +72,10 @@ export default class Doors extends EventEmitter {
   }
 
   update(_mouseDownLeft, _mouseDownRight) {
-    
     this.raycaster.setFromCamera(this.mouse, this.camera);
     this.intersect = this.raycaster.intersectObject(this.mesh);
 
     if (this.intersect.length) {
-
       if (this.currentIntersect) {
         if (this.currentIntersect.object.name === "door") {
           gsap.to(this.modelLeft.position, {
@@ -95,15 +93,15 @@ export default class Doors extends EventEmitter {
             ease: "power2.out",
           });
 
-          if(_mouseDownLeft) {
+          if (_mouseDownLeft) {
             console.log("left");
-            this.isClickedLeft = true
-            this.isClickedRight = false
+            this.isClickedLeft = true;
+            this.isClickedRight = false;
           }
-          if(_mouseDownRight) {
+          if (_mouseDownRight) {
             console.log("right");
-            this.isClickedRight = true
-            this.isClickedLeft = false
+            this.isClickedRight = true;
+            this.isClickedLeft = false;
           }
         }
       }
@@ -127,11 +125,10 @@ export default class Doors extends EventEmitter {
       this.currentIntersect = null;
     }
 
-
     if (this.isClickedRight) {
-      this.cameraTravel.travelUpdateLeft()
+      this.cameraTravel.travelUpdateLeft();
     } else if (this.isClickedLeft) {
-      this.cameraTravel.travelUpdateRight()
+      this.cameraTravel.travelUpdateRight();
     }
   }
 }
