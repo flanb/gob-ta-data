@@ -27,7 +27,7 @@ export default class Android {
 
   setModel() {
     this.model = this.resource.scene.clone();
-    this.model.scale.set(0.2, 0.2, 0.2);
+    this.model.scale.set(0.05, 0.05, 0.05);
     this.model.rotation.y = Math.random() * Math.PI * 2;
     this.model.name = "android";
     this.model.position.set(this.coords.x, this.coords.y, this.coords.z);
@@ -39,7 +39,7 @@ export default class Android {
     this.connector = new Connector(
       [
         new THREE.Vector3(this.coords.x, this.coords.y, this.coords.z),
-        new THREE.Vector3(-2, 20, 0),
+        new THREE.Vector3(-0.5, 5, 0),
       ],
       this.color,
       this.weight

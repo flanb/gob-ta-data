@@ -12,8 +12,6 @@ export default class Histogram {
 
     this.group = new THREE.Group();
 
-    console.log(this.data);
-
     this.allNetworks = Object.keys(social_network_colors);
 
     const allNetworksTime = {};
@@ -44,8 +42,8 @@ export default class Histogram {
       );
       this.setText(
         {
-          x: this.position.x - 1,
-          y: 21 + network[1] / 1000,
+          x: this.position.x,
+          y: 1 + this.position.y + network[1] / 1000,
           z: this.position.z - index,
         },
         color,
@@ -54,6 +52,7 @@ export default class Histogram {
     });
 
     this.group.position.set(this.position.x, this.position.y, this.position.z);
+    this.group.scale.set(0.4, 0.4, 0.4);
     this.scene.add(this.group);
   }
 
@@ -86,8 +85,8 @@ export default class Histogram {
     this.text.position.set(
       _position.x,
       _position.y,
-      _position.z + this.allNetworks.length / 2 + 0.75/2
+      _position.z + this.allNetworks.length / 2 + 0.75 / 2
     );
-    this.scene.add(this.text);
+    this.group.add(this.text);
   }
 }

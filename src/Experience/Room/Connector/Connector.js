@@ -11,8 +11,8 @@ export default class Connector {
     this.debug = this.experience.debug;
 
     this.bezierPoints = [
-      _points[0].clone().add(new THREE.Vector3(0, 10, 0)),
-      _points[1].clone().add(new THREE.Vector3(0, -10, 0)),
+      _points[0].clone().add(new THREE.Vector3(0, 2, 0)),
+      _points[1].clone().add(new THREE.Vector3(0, -2, 0)),
     ];
 
     this.points = _points;
@@ -23,7 +23,7 @@ export default class Connector {
       waveIntensity: 0.01,
       waveSpeed: 0.001,
       waveFrequency: 2,
-      noiseIntensity: 0.05,
+      noiseIntensity: 0.02,
       noiseSpeed: 0.001,
       noiseFrequency: 2,
       uRandom: Math.random(),
@@ -135,7 +135,7 @@ export default class Connector {
   }
 
   setLight() {
-    this.light = new THREE.PointLight(this.color, this.weight * 0.3);
+    this.light = new THREE.PointLight(this.color, this.weight * 0.2);
     this.light.position.copy(
       new THREE.Vector3(
         this.points[0].x - this.points[1].x,
@@ -157,7 +157,7 @@ export default class Connector {
     this.geometry = new THREE.TubeGeometry(
       curve,
       32,
-      0.01 * this.weight,
+      0.002 * this.weight,
       8,
       false
     );

@@ -2,7 +2,7 @@ import Experience from "../Experience.js";
 import Environment from "./Environment.js";
 import RoomDes from "./Rooms/RoomDes.js";
 import RoomDev from "./Rooms/RoomDev.js";
-import Doors from "./Doors.js"
+import Doors from "./Doors.js";
 import Android from "./Android.js";
 import screen_time from "../../data/screen_time.json";
 import Histogram from "./Histogram.js";
@@ -14,26 +14,25 @@ export default class Room {
     this.resources = this.experience.resources;
     this.camera = this.experience.camera;
 
-	  this.debug = this.experience.debug;
+    this.debug = this.experience.debug;
 
-	  this.devicesObjects = [];
-	  this.PARAMS = {
-		  randomRangeX: 5,
-		  randomRangeZ: 32,
-	  };
-	  if (this.debug.active) this.setDebug();
+    this.devicesObjects = [];
+    this.PARAMS = {
+      randomRangeX: 1,
+      randomRangeZ: 6,
+    };
 
-	  this.designer = screen_time.filter((d) => d.role === "Designer");
-	  this.developer = screen_time.filter((d) => d.role === "Developer");
+    this.designer = screen_time.filter((d) => d.role === "Designer");
+    this.developer = screen_time.filter((d) => d.role === "Developer");
 
-	  this.histogram = new Histogram(
-		  {
-			  x: -1,
-			  y: 10,
-			  z: 0,
-		  },
-		  this.designer
-	  );
+    this.histogram = new Histogram(
+      {
+        x: -0.3,
+        y: 3.5,
+        z: 0,
+      },
+      this.designer
+    );
 
     // Wait for resources
     this.resources.on("ready", () => {
@@ -71,13 +70,13 @@ export default class Room {
         {
           x:
             Math.random() * this.PARAMS.randomRangeX -
-            this.PARAMS.randomRangeX / 2 +
-            -3,
-          y: 3.25,
+            this.PARAMS.randomRangeX / 2 -
+            0.5,
+          y: 0.65,
           z:
             Math.random() * this.PARAMS.randomRangeZ -
             this.PARAMS.randomRangeZ / 2 +
-            3,
+            0.5,
         },
         des
       );
@@ -89,17 +88,17 @@ export default class Room {
     this.devicesObjects.forEach((device) => {
       device.update();
     });
-	  if(this.doors) {
-		  this.doors.update();
+    if (this.doors) {
+      this.doors.update();
 
-		  this.doors.on("doorsOpen", () => {
-			  // if(this.cameraMoved === false){
-			  //   this.camera.travelUpdateLeft();
-			  //   this.cameraMoved = true;
-			  // }
-			  this.camera.travelUpdateLeft();
-			  // this.camera.travelUpdateRight();
-		  });
-	  }
+      this.doors.on("doorsOpen", () => {
+        // if(this.cameraMoved === false){
+        //   this.camera.travelUpdateLeft();
+        //   this.cameraMoved = true;
+        // }
+        this.camera.travelUpdateLeft();
+        // this.camera.travelUpdateRight();
+      });
+    }
   }
 }
