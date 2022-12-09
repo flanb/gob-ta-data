@@ -28,17 +28,16 @@ export default class Doors extends EventEmitter {
   }
 
   setModel() {
-    this.plane = new THREE.PlaneGeometry(2.5, 2.1, 1, 1);
+    this.plane = new THREE.PlaneGeometry(13, 15, 1, 1);
     this.material = new THREE.MeshBasicMaterial({
       color: 0xff0000,
       side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0,
+      // transparent: true,
+      // opacity: 0,
     });
     this.mesh = new THREE.Mesh(this.plane, this.material);
-    this.mesh.position.set(-1, 7, 28);
+    this.mesh.position.set(-0.5, 7, 28);
     this.mesh.rotation.z = -Math.PI / 2;
-    this.mesh.scale.set(-4, 4, 4);
 
     this.modelLeft = this.resources.items.door_left.scene;
     this.modelRight = this.resources.items.door_right.scene;
@@ -78,20 +77,8 @@ export default class Doors extends EventEmitter {
     if (this.intersect.length) {
       if (this.currentIntersect) {
         if (this.currentIntersect.object.name === "door") {
-          gsap.to(this.modelLeft.position, {
-            x: 1,
-            y: 0,
-            z: 0,
-            duration: 0.5,
-            ease: "power2.out",
-          });
-          gsap.to(this.modelRight.position, {
-            x: -1,
-            y: 0,
-            z: 0,
-            duration: 0.5,
-            ease: "power2.out",
-          });
+          gsap.to(this.modelLeft.position, {x: 5,y: 0,z: 0,duration: 0.5,ease: "power2.out",});
+          gsap.to(this.modelRight.position, {x: -5,y: 0,z: 0,duration: 0.5,ease: "power2.out",});
 
           if (_mouseDownLeft) {
             console.log("left");

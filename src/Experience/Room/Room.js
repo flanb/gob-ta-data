@@ -13,6 +13,7 @@ export default class Room {
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
     this.camera = this.experience.camera.instance;
+    this.debug = this.experience.debug;
 
     this.mouseDownFromLeft = false;
     this.mouseDownFromRight = false;
@@ -22,7 +23,7 @@ export default class Room {
       randomRangeX: 5,
       randomRangeZ: 32,
     };
-    // if (this.debug.active) this.setDebug();
+    if (this.debug.active) this.setDebug();
 
     this.designer = screen_time.filter((d) => d.role === "Designer");
     this.developer = screen_time.filter((d) => d.role === "Developer");
@@ -56,22 +57,22 @@ export default class Room {
   }
 
   setDebug() {
-    this.debugFolder = this.debug.gui.addFolder({
-      title: "room",
-    });
-    //random range
-    this.debugFolder.addInput(this.PARAMS, "randomRangeX").on("change", () => {
-      this.devicesObjects.forEach((device) => {
-        device.destroy();
-      });
-      this.setPhones();
-    });
-    this.debugFolder.addInput(this.PARAMS, "randomRangeZ").on("change", () => {
-      this.devicesObjects.forEach((device) => {
-        device.destroy();
-      });
-      this.setPhones();
-    });
+    // this.debugFolder = this.debug.gui.addFolder({
+    //   title: "room",
+    // });
+    // //random range
+    // this.debugFolder.addInput(this.PARAMS, "randomRangeX").on("change", () => {
+    //   this.devicesObjects.forEach((device) => {
+    //     device.destroy();
+    //   });
+    //   this.setPhones();
+    // });
+    // this.debugFolder.addInput(this.PARAMS, "randomRangeZ").on("change", () => {
+    //   this.devicesObjects.forEach((device) => {
+    //     device.destroy();
+    //   });
+    //   this.setPhones();
+    // });
 
     if (this.camera) {
       this.initListners();
@@ -140,21 +141,23 @@ export default class Room {
     // check if the this.element is visible
     if (this.doors) {
       this.doors.update(this.mouseDownFromLeft, this.mouseDownFromRight);
-      this.devicesObjects.forEach((device) => {
-        device.update();
-      });
-      if (this.doors) {
-        this.doors.update();
-
-        this.doors.on("doorsOpen", () => {
-          // if(this.cameraMoved === false){
-          //   this.camera.travelUpdateLeft();
-          //   this.cameraMoved = true;
-          // }
-          this.camera.travelUpdateLeft();
-          // this.camera.travelUpdateRight();
-        });
-      }
     }
+    this.devicesObjects.forEach((device) => {
+      device.update();
+    });
+
+    
+    // if (this.doors) {
+    //   this.doors.update();
+
+    //   this.doors.on("doorsOpen", () => {
+    //     // if(this.cameraMoved === false){
+    //     //   this.camera.travelUpdateLeft();
+    //     //   this.cameraMoved = true;
+    //     // }
+    //     this.camera.travelUpdateLeft();
+    //     // this.camera.travelUpdateRight();
+    //   });
+    // }
   }
 }
