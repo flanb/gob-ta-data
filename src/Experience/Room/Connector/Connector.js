@@ -5,7 +5,7 @@ import noise from "/src/Experience/Utils/noise.glsl";
 import fragmentShader from "./fragment.glsl";
 
 export default class Connector {
-  constructor(_points, _color, _weight) {
+  constructor(_points, _color, _weight, _index) {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.debug = this.experience.debug;
@@ -33,7 +33,7 @@ export default class Connector {
     this.setGeometry();
     this.setMaterial();
     this.setMesh();
-    this.setLight();
+    // this.setLight();
   }
 
   setDebug() {
@@ -135,12 +135,12 @@ export default class Connector {
   }
 
   setLight() {
-    this.light = new THREE.PointLight(this.color, this.weight * 0.3);
+    this.light = new THREE.PointLight(this.color, this.weight * 0.1, 10);
     this.light.position.copy(
       new THREE.Vector3(
-        this.points[0].x - this.points[1].x,
+        this.points[0].x - this.points[1].x - 2,
         5,
-        this.points[0].z - this.points[1].z
+        this.points[0].z - this.points[1].z + (this.points[0].z > 20 ? 60 : 0)
       )
     );
     this.scene.add(this.light);
@@ -153,7 +153,6 @@ export default class Connector {
       this.points[1]
     );
 
-
     this.geometry = new THREE.TubeGeometry(
       curve,
       32,
@@ -165,7 +164,7 @@ export default class Connector {
 
   updateGeometry() {
     this.geometry.dispose();
-		this.light.dispose()
+    this.light.dispose();
     this.setGeometry();
     this.mesh.geometry = this.geometry;
   }
@@ -200,7 +199,7 @@ export default class Connector {
   destroy() {
     this.geometry.dispose();
     this.material.dispose();
-		this.light.dispose()
+    this.light.dispose();
     this.scene.remove(this.mesh);
   }
 }

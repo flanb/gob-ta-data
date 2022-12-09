@@ -17,7 +17,7 @@ export default class RoomDes {
 
   setModel() {
     this.model = this.resource.scene;
-    this.model.scale.set(0.2, 0.2, 0.2);
+    // this.model.scale.set(0.2, 0.2, 0.2);
     this.scene.add(this.model);
   }
 

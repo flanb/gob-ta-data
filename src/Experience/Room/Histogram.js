@@ -46,7 +46,7 @@ export default class Histogram {
         {
           x: this.position.x - 1,
           y: 21 + network[1] / 1000,
-          z: this.position.z - index,
+          z: this.position.z - index + (this.position.z < 12 ? 0 : 28),
         },
         color,
         network[0]
@@ -86,7 +86,7 @@ export default class Histogram {
     this.text.position.set(
       _position.x,
       _position.y,
-      _position.z + this.allNetworks.length / 2 + 0.75/2
+      _position.z + this.allNetworks.length / 2 + 0.75 / 2
     );
     this.scene.add(this.text);
   }
