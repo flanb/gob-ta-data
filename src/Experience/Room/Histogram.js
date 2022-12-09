@@ -32,25 +32,27 @@ export default class Histogram {
 
     this.allNetworksTimeSorted.forEach((network, index) => {
       const color = new THREE.Color(social_network_colors[network[0]]);
-      this.setBar(
-        {
-          x: this.position.x,
-          y: this.position.y,
-          z: this.position.z - index,
-        },
-        color,
-        network[1] / 1000
-      );
-      this.setText(
-        {
-          x: this.position.x - 1,
-          y: 21 + network[1] / 1000,
-          z: this.position.z - index + (this.position.z < 12 ? 0 : 28),
-        },
-        color,
-        network[0],
-        network[1] / 1000
-      );
+      if (network[1] > 0) {
+        this.setBar(
+          {
+            x: this.position.x,
+            y: this.position.y,
+            z: this.position.z - index,
+          },
+          color,
+          network[1] / 1000
+        );
+        this.setText(
+          {
+            x: this.position.x - 1,
+            y: 21 + network[1] / 1000,
+            z: this.position.z - index + (this.position.z < 12 ? 0 : 28),
+          },
+          color,
+          network[0],
+          network[1] / 1000
+        );
+      }
     });
 
     this.group.position.set(this.position.x, this.position.y, this.position.z);
@@ -58,7 +60,7 @@ export default class Histogram {
   }
 
   setLight(_position, _color) {
-    this.light = new THREE.PointLight(new THREE.Color(_color), 1);
+    this.light = new THREE.PointLight(new THREE.Color(_color));
     this.light.position.set(_position.x, _position.y, _position.z);
     this.group.add(this.light);
   }
@@ -78,7 +80,11 @@ export default class Histogram {
   }
   setText(_position, _color, _text, _weight) {
     this.text = new Text();
-    this.text.text = _text.charAt(0).toUpperCase() + _text.slice(1);
+    this.text.text =
+      _text.charAt(0).toUpperCase() +
+      _text.slice(1) +
+      ` (${_weight * 1000}min)`;
+
     this.text.fontSize = 0.75;
     this.text.font = "/quicksand.woff";
     this.text.weight = "bold";

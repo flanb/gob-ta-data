@@ -1,5 +1,9 @@
 import * as THREE from "three";
 import Experience from "./Experience.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 
 export default class Renderer {
   constructor() {
@@ -10,6 +14,16 @@ export default class Renderer {
     this.camera = this.experience.camera;
 
     this.setInstance();
+    const renderScene = new RenderPass(this.scene, this.camera.instance);
+    this.composer = new EffectComposer(this.instance);
+    this.composer.addPass(renderScene);
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(this.sizes.width, this.sizes.height),
+      0,
+      0,
+      0
+    );
+    // this.composer.addPass(bloomPass);
   }
 
   setInstance() {
@@ -23,7 +37,7 @@ export default class Renderer {
     this.instance.toneMappingExposure = 1.75;
     // this.instance.shadowMap.enabled = true
     // this.instance.shadowMap.type = THREE.PCFSoftShadowMap
-    this.instance.setClearColor("#211d20");
+    this.instance.setClearColor("rgba(2,2,2,0)");
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(this.sizes.pixelRatio);
   }
@@ -34,6 +48,7 @@ export default class Renderer {
   }
 
   update() {
-    this.instance.render(this.scene, this.camera.instance);
+    this.composer.render();
+    // this.instance.render(this.scene, this.camera.instance);
   }
 }

@@ -17,6 +17,7 @@ export default class Room {
 
     this.mouseDownFromLeft = false;
     this.mouseDownFromRight = false;
+    this.lightGenerated = false;
 
     this.devicesObjects = [];
     this.PARAMS = {
@@ -24,6 +25,9 @@ export default class Room {
       randomRangeZ: 32,
     };
     if (this.debug.active) this.setDebug();
+    if (this.camera) {
+      this.initListners();
+    }
 
     this.designer = screen_time.filter((d) => d.role === "Designer");
     this.developer = screen_time.filter((d) => d.role === "Developer");
@@ -73,10 +77,6 @@ export default class Room {
     //   });
     //   this.setPhones();
     // });
-
-    if (this.camera) {
-      this.initListners();
-    }
   }
 
   initListners() {
@@ -97,7 +97,7 @@ export default class Room {
   }
 
   setPhones() {
-    this.designer.forEach((des) => {
+    this.designer.forEach((des, index) => {
       this.android = new Android(
         {
           x:
@@ -111,12 +111,13 @@ export default class Room {
             3,
         },
         des,
-        this.histogram.allNetworksTimeSorted
+        this.histogram.allNetworksTimeSorted,
+        index % 2
       );
       this.devicesObjects.push(this.android);
     });
 
-    this.developer.forEach((dev) => {
+    this.developer.forEach((dev, index) => {
       this.android = new Android(
         {
           x:
@@ -130,7 +131,8 @@ export default class Room {
             58,
         },
         dev,
-        this.histogram1.allNetworksTimeSorted
+        this.histogram1.allNetworksTimeSorted,
+        index % 2
       );
       this.devicesObjects.push(this.android);
     });
@@ -146,7 +148,6 @@ export default class Room {
       device.update();
     });
 
-    
     // if (this.doors) {
     //   this.doors.update();
 

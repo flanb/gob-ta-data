@@ -9,22 +9,21 @@ export default class Camera {
     this.sizes = this.experience.sizes;
     this.scene = this.experience.scene;
     this.canvas = this.experience.canvas;
-    this.debug = this.experience.debug
+    this.debug = this.experience.debug;
 
     this.setInstance();
     this.travalPath();
     this.setOrbitControls();
 
-    this.startAnimation = false
+    this.startAnimation = false;
 
-    if(this.debug.active) {
-      this.debug.gui.addButton({ title: "Start Animation" })
-      .on("click", () => {
+    if (this.debug.active) {
+      this.debug.gui.addButton({ title: "Start Animation" }).on("click", () => {
         this.startAnimation = true;
-      })
+      });
     }
 
-    this.canTravelLeft = true
+    this.canTravelLeft = true;
   }
 
   setInstance() {
@@ -39,28 +38,53 @@ export default class Camera {
   }
 
   travalPath() {
-    if (this.debug.active) {
-      this.mesh = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), new THREE.MeshBasicMaterial({ color: 0xff0000 }))
-      this.mesh.position.set(-2, 12, 0)
+    this.mesh = new THREE.Mesh(
+      new THREE.BoxGeometry(2, 2, 2),
+      new THREE.MeshBasicMaterial({
+        color: 0xff0000,
+        transparent: true,
+        opacity: 0,
+      })
+    );
+    this.mesh.position.set(-2, 12, 0);
 
-      this.scene.add(this.mesh)
-    }
+    this.scene.add(this.mesh);
   }
 
   travelUpdateLeft() {
-    this.instance.lookAt(this.mesh.position)
+    this.instance.lookAt(this.mesh.position);
     gsap.to(this.instance.position, {
-      x: 160, y: 130, z: 150, duration: 3, ease: "power2.inout",
-    })
-    gsap.to(this.mesh.position, {x: -2, y: 12, z: 60, duration: 3, ease: "power2.inout"})
+      x: 160,
+      y: 130,
+      z: 150,
+      duration: 3,
+      ease: "power2.inout",
+    });
+    gsap.to(this.mesh.position, {
+      x: -2,
+      y: 12,
+      z: 60,
+      duration: 3,
+      ease: "power2.inout",
+    });
   }
 
   travelUpdateRight() {
-    this.instance.lookAt(this.mesh.position)
+    this.instance.lookAt(this.mesh.position);
     gsap.to(this.instance.position, {
-      x: 160, y: 130, z: -180, duration: 3, ease: "power2.inout",
-    })
-    gsap.to(this.mesh.position, {x: -2, y: 12, z: 0, duration: 3, ease: "power2.inout"})
+      x: 160,
+      y: 130,
+      z: -180,
+      duration: 3,
+      ease: "power2.inout",
+    });
+    gsap.to(this.mesh.position, {
+      x: -2,
+      y: 12,
+      z: 0,
+      duration: 3,
+      ease: "power2.inout",
+    });
   }
 
   setOrbitControls() {
@@ -75,9 +99,9 @@ export default class Camera {
 
   update() {
     this.controls.update();
-    
+
     if (this.startAnimation) {
-      this.travelUpdateLeft()
+      this.travelUpdateLeft();
     }
   }
 }

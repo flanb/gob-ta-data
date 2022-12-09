@@ -4,7 +4,7 @@ import Connector from "./Connector/Connector.js";
 import social_network_colors from "../../data/social_network_colors.json";
 
 export default class Android {
-  constructor(_coords, _data, _sortedTimeData) {
+  constructor(_coords, _data, _sortedTimeData, _createLight) {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
@@ -13,6 +13,7 @@ export default class Android {
     this.coords = _coords;
     this.data = _data;
     this.sortedTimeData = _sortedTimeData;
+    this.createLight = _createLight;
 
     this.mostUsed = Object.keys(this.data).sort((a, b) => {
       return this.data[b] - this.data[a];
@@ -53,12 +54,16 @@ export default class Android {
         ),
       ],
       this.color,
-      this.weight
+      this.weight,
+      this.createLight
     );
   }
 
   update() {
     this.connector.update();
+  }
+  destroyLight() {
+    this.connector.destroyLight();
   }
 
   destroy() {

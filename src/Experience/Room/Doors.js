@@ -21,7 +21,7 @@ export default class Doors extends EventEmitter {
 
     this.setModel();
     this.setRaycaster();
-    this.setPointLight();
+    // this.setPointLight();
 
     this.isClickedLeft = false;
     this.isClickedRight = false;
@@ -32,8 +32,8 @@ export default class Doors extends EventEmitter {
     this.material = new THREE.MeshBasicMaterial({
       color: 0xff0000,
       side: THREE.DoubleSide,
-      // transparent: true,
-      // opacity: 0,
+      transparent: true,
+      opacity: 0,
     });
     this.mesh = new THREE.Mesh(this.plane, this.material);
     this.mesh.position.set(-0.5, 7, 28);
@@ -77,8 +77,20 @@ export default class Doors extends EventEmitter {
     if (this.intersect.length) {
       if (this.currentIntersect) {
         if (this.currentIntersect.object.name === "door") {
-          gsap.to(this.modelLeft.position, {x: 5,y: 0,z: 0,duration: 0.5,ease: "power2.out",});
-          gsap.to(this.modelRight.position, {x: -5,y: 0,z: 0,duration: 0.5,ease: "power2.out",});
+          gsap.to(this.modelLeft.position, {
+            x: 5,
+            y: 0,
+            z: 0,
+            duration: 0.5,
+            ease: "power2.out",
+          });
+          gsap.to(this.modelRight.position, {
+            x: -5,
+            y: 0,
+            z: 0,
+            duration: 0.5,
+            ease: "power2.out",
+          });
 
           if (_mouseDownLeft) {
             console.log("left");

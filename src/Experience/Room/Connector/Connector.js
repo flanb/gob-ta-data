@@ -5,7 +5,7 @@ import noise from "/src/Experience/Utils/noise.glsl";
 import fragmentShader from "./fragment.glsl";
 
 export default class Connector {
-  constructor(_points, _color, _weight, _index) {
+  constructor(_points, _color, _weight, _createLight) {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.debug = this.experience.debug;
@@ -23,8 +23,8 @@ export default class Connector {
       waveIntensity: 0.01,
       waveSpeed: 0.001,
       waveFrequency: 2,
-      noiseIntensity: 0.05,
-      noiseSpeed: 0.001,
+      noiseIntensity: 0.1,
+      noiseSpeed: 0.0005,
       noiseFrequency: 2,
       uRandom: Math.random(),
     };
@@ -33,7 +33,7 @@ export default class Connector {
     this.setGeometry();
     this.setMaterial();
     this.setMesh();
-    // this.setLight();
+    if (_createLight) this.setLight();
   }
 
   setDebug() {
@@ -140,7 +140,7 @@ export default class Connector {
       new THREE.Vector3(
         this.points[0].x - this.points[1].x - 2,
         5,
-        this.points[0].z - this.points[1].z + (this.points[0].z > 20 ? 60 : 0)
+        this.points[0].z - this.points[1].z + (this.points[0].z > 20 ? 67 : 10)
       )
     );
     this.scene.add(this.light);
@@ -196,10 +196,14 @@ export default class Connector {
     this.material.uniforms.uTime.value = this.experience.time.elapsed;
   }
 
+  destroyLight() {
+    this.scene.remove(this.light);
+  }
+
   destroy() {
     this.geometry.dispose();
     this.material.dispose();
-    // this.light.destroy();
+    this.destroyLight();
     this.scene.remove(this.mesh);
   }
 }
