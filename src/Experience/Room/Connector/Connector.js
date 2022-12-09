@@ -33,7 +33,7 @@ export default class Connector {
     this.setGeometry();
     this.setMaterial();
     this.setMesh();
-    this.setLight();
+    // this.setLight();
   }
 
   setDebug() {

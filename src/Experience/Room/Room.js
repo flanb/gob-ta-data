@@ -33,6 +33,14 @@ export default class Room {
       },
       this.designer
     );
+    this.histogram1 = new Histogram(
+      {
+        x: -0.3,
+        y: 3.5,
+        z: 8,
+      },
+      this.developer
+    );
 
     // Wait for resources
     this.resources.on("ready", () => {
@@ -79,6 +87,24 @@ export default class Room {
             0.5,
         },
         des
+      );
+      this.devicesObjects.push(this.android);
+    });
+
+    this.developer.forEach((dev) => {
+      this.android = new Android(
+        {
+          x:
+            Math.random() * this.PARAMS.randomRangeX -
+            this.PARAMS.randomRangeX / 2 -
+            0.25,
+          y: 0.65,
+          z:
+            Math.random() * this.PARAMS.randomRangeZ -
+            this.PARAMS.randomRangeZ / 2 -
+            -12,
+        },
+        dev
       );
       this.devicesObjects.push(this.android);
     });

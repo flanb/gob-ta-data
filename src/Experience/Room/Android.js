@@ -39,7 +39,7 @@ export default class Android {
     this.connector = new Connector(
       [
         new THREE.Vector3(this.coords.x, this.coords.y, this.coords.z),
-        new THREE.Vector3(-0.5, 5, 0),
+        new THREE.Vector3(-0.5, 5, this.coords.z > 5 ? 12 : 0),
       ],
       this.color,
       this.weight
