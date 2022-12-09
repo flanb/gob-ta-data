@@ -15,9 +15,14 @@ export default [
     path: "models/Rooms/glTF/rooms/roomDev.gltf",
   },
   {
-    name: "doors",
+    name: "door_left",
     type: "gltfModel",
-    path: "models/Rooms/glTF/doors.gltf",
+    path: "models/Rooms/glTF/door_left.gltf",
+  },
+  {
+    name: "door_right",
+    type: "gltfModel",
+    path: "models/Rooms/glTF/door_right.gltf",
   },
   {
     name: "android",

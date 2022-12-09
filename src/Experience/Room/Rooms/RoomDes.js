@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import Experience from "../Experience.js";
+import Experience from "../../Experience.js";
 
 export default class RoomDes {
   constructor() {
@@ -17,6 +17,7 @@ export default class RoomDes {
 
   setModel() {
     this.model = this.resource.scene;
+    this.model.scale.set(0.2, 0.2, 0.2);
     this.scene.add(this.model);
   }
 

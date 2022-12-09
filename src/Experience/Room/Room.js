@@ -1,6 +1,8 @@
 import Experience from "../Experience.js";
 import Environment from "./Environment.js";
-import RoomDes from "./RoomDes.js";
+import RoomDes from "./Rooms/RoomDes.js";
+import RoomDev from "./Rooms/RoomDev.js";
+import Doors from "./Doors.js"
 import Android from "./Android.js";
 import screen_time from "../../data/screen_time.json";
 import Histogram from "./Histogram.js";
@@ -10,32 +12,36 @@ export default class Room {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
-    this.debug = this.experience.debug;
+    this.camera = this.experience.camera;
 
-    this.devicesObjects = [];
-    this.PARAMS = {
-      randomRangeX: 5,
-      randomRangeZ: 32,
-    };
-    if (this.debug.active) this.setDebug();
+	  this.debug = this.experience.debug;
 
-    this.designer = screen_time.filter((d) => d.role === "Designer");
-    this.developer = screen_time.filter((d) => d.role === "Developer");
+	  this.devicesObjects = [];
+	  this.PARAMS = {
+		  randomRangeX: 5,
+		  randomRangeZ: 32,
+	  };
+	  if (this.debug.active) this.setDebug();
 
-    this.histogram = new Histogram(
-      {
-        x: -1,
-        y: 10,
-        z: 0,
-      },
-      this.designer
-    );
+	  this.designer = screen_time.filter((d) => d.role === "Designer");
+	  this.developer = screen_time.filter((d) => d.role === "Developer");
+
+	  this.histogram = new Histogram(
+		  {
+			  x: -1,
+			  y: 10,
+			  z: 0,
+		  },
+		  this.designer
+	  );
 
     // Wait for resources
     this.resources.on("ready", () => {
       this.setPhones();
 
       this.roomDes = new RoomDes();
+      this.doors = new Doors();
+      this.roomDev = new RoomDev();
       this.environment = new Environment();
     });
   }
@@ -83,5 +89,17 @@ export default class Room {
     this.devicesObjects.forEach((device) => {
       device.update();
     });
+	  if(this.doors) {
+		  this.doors.update();
+
+		  this.doors.on("doorsOpen", () => {
+			  // if(this.cameraMoved === false){
+			  //   this.camera.travelUpdateLeft();
+			  //   this.cameraMoved = true;
+			  // }
+			  this.camera.travelUpdateLeft();
+			  // this.camera.travelUpdateRight();
+		  });
+	  }
   }
 }

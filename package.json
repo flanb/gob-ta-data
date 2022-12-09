@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tweakpane/plugin-essentials": "^0.1.5",
+    "gsap": "^3.11.3",
     "three": "^0.147.0",
     "troika-three-text": "^0.46.4",
     "tweakpane": "^3.1.1"
