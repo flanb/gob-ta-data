@@ -83,12 +83,15 @@ export default class Histogram {
     this.text.text =
       _text.charAt(0).toUpperCase() +
       _text.slice(1) +
-      ` (${_weight * 1000}min)`;
+      ` (${Math.floor((_weight * 1000) / 60)}h ${Math.floor(
+        (_weight * 1000) % 60
+      )}min)`;
 
     this.text.fontSize = 0.75;
     this.text.font = "/quicksand.woff";
     this.text.weight = "bold";
     this.text.color = new THREE.Color(_color);
+    this.text.backgroundColor = new THREE.Color(0x000000);
     this.text.rotation.y = Math.PI / 2;
     this.text.rotation.x = Math.PI / 4;
 

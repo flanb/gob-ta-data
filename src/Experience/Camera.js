@@ -74,7 +74,7 @@ export default class Camera {
     gsap.to(this.instance.position, {
       x: 160,
       y: 130,
-      z: -180,
+      z: -120,
       duration: 3,
       ease: "power2.inout",
     });
